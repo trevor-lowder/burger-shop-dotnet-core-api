@@ -42,7 +42,7 @@ public class BurgerController : ControllerBase
         var existingBurger = BurgerService.Get(id);
         if (existingBurger is null) return NotFound();
         BurgerService.Update(burger);
-        return Content($"Updated burger: {burger.Name}");
+        return Content($"Updated burger: [id: {burger.Id} name: {burger.Name}]");
     }
 
     //  DELETE burger by Id
@@ -52,6 +52,6 @@ public class BurgerController : ControllerBase
         var burger = BurgerService.Get(id);
         if (burger is null) return NotFound();
         BurgerService.Delete(id);
-        return Content($"Deleted burger: {burger.Name}");
+        return Content($"Deleted burger: [id: {burger.Id} name: {burger.Name}]");
     }
 }
