@@ -27,6 +27,31 @@ public class BurgerController : ControllerBase
     }
 
     //  POST create new burger
+    [HttpPost]
+    public IActionResult Create(Burger burger)
+    {
+        BurgerService.Add(burger);
+        return CreatedAtAction(nameof(Get), new { id = burger.Id }, burger);
+    }
+
     //  PUT edit burger
+    [HttpPut("{id}")]
+    public IActionResult Update(int id, Burger burger)
+    {
+        if (id != burger.Id) return BadRequest();
+        var existingBurger = BurgerService.Get(id);
+        if (existingBurger is null) return NotFound();
+        BurgerService.Update(burger);
+        return Content($"Updated burger: {burger.Name}");
+    }
+
     //  DELETE burger by Id
+    [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
+    {
+        var burger = BurgerService.Get(id);
+        if (burger is null) return NotFound();
+        BurgerService.Delete(id);
+        return Content($"Deleted burger: {burger.Name}");
+    }
 }
